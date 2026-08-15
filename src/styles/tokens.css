@@ -19,7 +19,8 @@
   --text-lead: clamp(1.125rem, 1.5vw, 1.3125rem);
   --text-h3: clamp(1.35rem, 2vw, 1.65rem);
   --text-h2: clamp(2rem, 4vw, 3.75rem);
-  --text-h1: clamp(2.5rem, 6vw, 5.5rem);
+  --text-h1: clamp(2.25rem, 5vw, 4.75rem);
+  --text-h1-home: clamp(2.5rem, 6vw, 5.5rem);
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;

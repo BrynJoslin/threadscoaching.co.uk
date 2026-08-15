@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CallToAction from '../components/CallToAction.astro';
+import { services } from '../data/services';
+import heroImage from '../assets/people/joy-and-paul.jpg';
+import { coachingCollectionSchema, organizationSchema, serviceSchema } from '../data/schema';
+
+const coachingServices = services.filter((service) => service.href !== '/team-workshops');
+const serviceSchemas = coachingServices.map((service) =>
+  serviceSchema(service.title, service.href, service.summary),
+);
+---
+
+<BaseLayout
+  title="Coaching for Life, Leadership, Faith & Personality | Threads Coaching"
+  description="Explore life and leadership, identity and faith, and personality coaching with Threads Coaching."
+  path="/coaching"
+  schema={[organizationSchema, coachingCollectionSchema(), ...serviceSchemas]}
+>
+  <section class="coaching-hero section">
+    <span class="coaching-hero__loop coaching-hero__loop--one" aria-hidden="true"></span>
+    <span class="coaching-hero__loop coaching-hero__loop--two" aria-hidden="true"></span>
+    <div class="container coaching-hero__grid">
+      <div class="coaching-hero__copy">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Coaching' }]} />
+        <p class="eyebrow">Life, leadership and Christian coaching</p>
+        <h1>Choose the support that fits where you are.</h1>
+        <p class="lead">You do not need to know exactly what kind of coaching you need before you contact us. Tell us what is going on and we will help you find a useful starting point.</p>
+        <a class="button button--primary" href="/contact">Start a conversation <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="coaching-hero__visual">
+        <Image src={heroImage} alt="Joy and Paul Blundell of Threads Coaching" width={720} densities={[1, 1.5]} sizes="(min-width: 64rem) 36rem, 92vw" quality={55} loading="eager" fetchpriority="high" />
+        <p>Two different approaches. One shared heart for helping people grow.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section coaching-routes" aria-labelledby="coaching-routes-title">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Ways we can work together</p>
+          <h2 id="coaching-routes-title">Three routes for individual coaching.</h2>
+        </div>
+        <p class="lead">Our styles are different, but our aim is the same: honest conversation that leads to meaningful change.</p>
+      </div>
+      <div class="card-grid coaching-routes__grid">
+        {coachingServices.map((service) => <ServiceCard {service} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container narrow coaching-next-step">
+      <p class="eyebrow">A simple next step</p>
+      <h2>You don’t have to arrive with the answer.</h2>
+      <p>Come with a clear goal or simply explain what feels stuck, stretched or uncertain. We will explore whether Joy, Paul, one-to-one coaching or another offer is the right fit for what you are facing.</p>
+      <a class="text-link" href="/contact">Start a conversation <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <CallToAction title="What’s the thread you want to pick up next?" body="Whether you are navigating a transition or developing as a leader, start by telling us what is going on." primaryHref="/contact" primaryLabel="Start a conversation" />
+</BaseLayout>
+
+<style>
+  .coaching-hero { position: relative; overflow: hidden; background: radial-gradient(circle at 12% 13%, rgb(229 223 189 / 0.72), transparent 23rem), linear-gradient(135deg, #fffdf8 0%, #f5fbfa 48%, var(--color-teal-soft) 100%); }
+  .coaching-hero__grid { position: relative; z-index: 1; display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+  .coaching-hero__copy { display: grid; gap: var(--space-4); }
+  .coaching-hero__visual { position: relative; padding-bottom: 1.5rem; }
+  .coaching-hero__visual :global(img) { width: 100%; min-height: 19rem; object-fit: cover; object-position: center; border: 0.45rem solid rgb(255 255 255 / 0.78); border-radius: 48% 48% 8% 8% / 35% 35% 7% 7%; box-shadow: 0 1.5rem 4rem rgb(23 56 60 / 0.18); }
+  .coaching-hero__visual p { position: relative; z-index: 1; width: min(88%, 19rem); padding: 1rem 1.15rem; margin: -1.5rem 0 0 auto; background: rgb(255 255 255 / 0.96); border: 1px solid var(--color-line); border-radius: 1.2rem; box-shadow: var(--shadow-soft); color: var(--color-muted); font-size: var(--text-sm); font-weight: 700; }
+  .coaching-hero__loop { position: absolute; width: 32rem; height: 9rem; border: 2px solid rgb(47 127 141 / 0.2); border-radius: 50%; pointer-events: none; }
+  .coaching-hero__loop--one { top: 5rem; right: -8rem; transform: rotate(-14deg); }
+  .coaching-hero__loop--two { top: 9rem; right: -10rem; transform: rotate(9deg); }
+  .coaching-routes { background: var(--color-white); }
+  .coaching-routes__grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+  .coaching-routes__grid :global(.service-card:nth-child(1)) { background: var(--color-teal-soft); }
+  .coaching-routes__grid :global(.service-card:nth-child(2)) { background: #fff4ef; border-color: #f2ddd7; }
+  .coaching-next-step { display: grid; gap: var(--space-4); }
+
+  @media (min-width: 64rem) {
+    .coaching-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr); }
+  }
+</style>

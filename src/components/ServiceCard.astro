@@ -30,8 +30,6 @@ const { service } = Astro.props;
     background: var(--color-white);
     border: 1px solid var(--color-line);
     border-radius: 1.8rem 1.8rem 1.8rem 0.45rem;
-    box-shadow: 0 0 0 rgb(23 56 60 / 0);
-    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
   }
 
   .service-card::after {
@@ -44,12 +42,6 @@ const { service } = Astro.props;
     border-radius: 50%;
     content: '';
     transform: rotate(-18deg);
-  }
-
-  .service-card:hover {
-    border-color: transparent;
-    box-shadow: var(--shadow-soft);
-    transform: translateY(-0.25rem);
   }
 
   p {
@@ -99,8 +91,4 @@ const { service } = Astro.props;
     border-color: #f2ddd7;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .service-card { transition: none; }
-    .service-card:hover { transform: none; }
-  }
 </style>

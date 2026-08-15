@@ -53,3 +53,38 @@ export function pageSchema(type: 'AboutPage' | 'ContactPage', path: string, name
     about: { '@id': schemaId('organization') },
   };
 }
+
+export function coachingCollectionSchema(): SchemaNode {
+  const path = '/coaching';
+
+  return {
+    '@type': 'CollectionPage',
+    '@id': `${absoluteUrl(path)}#page`,
+    name: 'Coaching with Threads Coaching',
+    description:
+      'Explore life and leadership, identity and faith, and personality coaching with Threads Coaching.',
+    url: absoluteUrl(path),
+    isPartOf: { '@id': schemaId('website') },
+    about: { '@id': schemaId('organization') },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          item: { '@id': `${absoluteUrl('/one-to-one-sessions')}#service` },
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          item: { '@id': `${absoluteUrl('/body-soul-spirit-reset')}#service` },
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          item: { '@id': `${absoluteUrl('/personality-discover-develop')}#service` },
+        },
+      ],
+    },
+  };
+}

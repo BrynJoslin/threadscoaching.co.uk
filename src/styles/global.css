@@ -18,7 +18,6 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: 1.6;
-  overflow-wrap: anywhere;
 }
 
 img,
@@ -50,6 +49,7 @@ input[type="radio"] {
 
 a {
   color: var(--color-teal-dark);
+  overflow-wrap: anywhere;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.16em;
 }
@@ -324,9 +324,7 @@ ol {
   background: var(--color-white);
   border: 1px solid #e9e3d4;
   border-radius: 1.8rem 1.8rem 1.8rem 0.45rem;
-  box-shadow: 0 0 0 rgb(23 56 60 / 0);
   counter-increment: step;
-  transition: box-shadow 180ms ease, transform 180ms ease;
 }
 
 .steps li::before {
@@ -337,11 +335,6 @@ ol {
   font-size: var(--text-sm);
   font-weight: 850;
   letter-spacing: 0.1em;
-}
-
-.steps li:hover {
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-0.2rem);
 }
 
 .steps strong {
@@ -364,15 +357,10 @@ ol {
   text-align: center;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 64rem) {
   .steps {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .steps li { transition: none; }
-  .steps li:hover { transform: none; }
 }
 
 details {
@@ -485,7 +473,7 @@ details > p {
   white-space: nowrap;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 64rem) {
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr);
   }

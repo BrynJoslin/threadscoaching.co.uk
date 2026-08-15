@@ -21,6 +21,13 @@ export const pages = [
     indexable: true,
   },
   {
+    path: '/coaching',
+    title: 'Coaching for Life, Leadership, Faith & Personality | Threads Coaching',
+    description:
+      'Explore life and leadership, identity and faith, and personality coaching with Threads Coaching.',
+    indexable: true,
+  },
+  {
     path: '/personality-discover-develop',
     title: 'Personality Coaching: Discover & Develop | Threads Coaching',
     description:

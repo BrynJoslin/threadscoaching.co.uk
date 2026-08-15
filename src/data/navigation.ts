@@ -4,7 +4,7 @@ export type NavigationItem = {
 };
 
 export const primaryNavigation = [
-  { label: 'Coaching', href: '/one-to-one-sessions' },
+  { label: 'Coaching', href: '/coaching' },
   { label: 'Teams', href: '/team-workshops' },
   { label: 'Speaking', href: '/public-speaking' },
   { label: 'About', href: '/about' },
