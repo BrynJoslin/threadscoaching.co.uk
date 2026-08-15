@@ -1,0 +1,160 @@
+---
+import { primaryNavigation } from '../data/navigation';
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/" aria-label="Threads Coaching home">
+      <span aria-hidden="true">Threads</span>
+      <span>Coaching</span>
+    </a>
+
+    <nav class="site-header__desktop-nav" aria-label="Primary navigation">
+      <ul>
+        {
+          primaryNavigation.map((item) => (
+            <li>
+              <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="button button--primary site-header__cta" href="/contact">Start a conversation</a>
+
+    <details class="site-header__mobile-menu">
+      <summary><span class="visually-hidden">Open </span>Menu</summary>
+      <nav aria-label="Mobile primary navigation">
+        <ul>
+          {
+            primaryNavigation.map((item) => (
+              <li>
+                <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+          <li><a href="/contact">Start a conversation</a></li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 10;
+    background: var(--color-cream);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .site-header__inner {
+    display: flex;
+    min-height: 5rem;
+    align-items: center;
+    gap: var(--space-4);
+    justify-content: space-between;
+  }
+
+  .site-header__brand {
+    display: grid;
+    color: var(--color-ink);
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 0.9;
+    text-decoration: none;
+  }
+
+  .site-header__brand span:first-child {
+    color: var(--color-teal-dark);
+    font-size: 1.35rem;
+    font-style: italic;
+  }
+
+  .site-header__desktop-nav {
+    display: none;
+  }
+
+  .site-header__desktop-nav ul,
+  .site-header__mobile-menu ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .site-header__desktop-nav ul {
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .site-header__desktop-nav a {
+    color: var(--color-ink);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .site-header__desktop-nav a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--color-coral-dark);
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.35em;
+  }
+
+  .site-header__mobile-menu {
+    position: relative;
+  }
+
+  .site-header__mobile-menu summary {
+    min-height: 3rem;
+    padding: 0.65rem 0.8rem;
+    color: var(--color-ink);
+    font-weight: 750;
+  }
+
+  .site-header__mobile-menu nav {
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    right: 0;
+    width: min(20rem, calc(100vw - (var(--gutter) * 2)));
+    padding: var(--space-3);
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .site-header__mobile-menu ul {
+    flex-direction: column;
+  }
+
+  .site-header__mobile-menu a {
+    display: block;
+    padding: 0.7rem;
+    color: var(--color-ink);
+    font-weight: 650;
+  }
+
+  .site-header__cta {
+    display: none;
+  }
+
+  @media (min-width: 48rem) {
+    .site-header__desktop-nav,
+    .site-header__cta {
+      display: block;
+    }
+
+    .site-header__mobile-menu {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+import type { Testimonial as TestimonialData } from '../data/testimonials';
+
+interface Props {
+  testimonial: TestimonialData;
+}
+
+const { testimonial } = Astro.props;
+---
+
+<figure class="testimonial">
+  <blockquote>
+    <p>“{testimonial.quote}”</p>
+  </blockquote>
+  {testimonial.attribution && (
+    <figcaption>
+      {testimonial.attribution}{testimonial.context && `, ${testimonial.context}`}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .testimonial {
+    display: grid;
+    gap: var(--space-4);
+    height: 100%;
+    padding: var(--space-6);
+    margin: 0;
+    background: var(--color-teal-soft);
+    border-radius: var(--radius-md);
+  }
+
+  blockquote {
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+    font-weight: 650;
+    line-height: 1.45;
+  }
+
+  figcaption {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+</style>

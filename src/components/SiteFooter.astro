@@ -1,0 +1,95 @@
+---
+import { site } from '../config/site';
+import { footerNavigation } from '../data/navigation';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <section aria-labelledby="footer-brand">
+      <h2 id="footer-brand" class="site-footer__brand">Threads Coaching</h2>
+      <p>Life, leadership and Christian coaching for individuals and teams seeking a clearer way forward.</p>
+    </section>
+
+    <nav aria-label="Footer navigation">
+      <h2>Explore</h2>
+      <ul>
+        {footerNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <section aria-labelledby="footer-contact">
+      <h2 id="footer-contact">Start a conversation</h2>
+      <address>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+        <a href={`tel:${site.telephone}`}>{site.telephoneDisplay}</a>
+      </address>
+      <p><a href="/contact">Contact Threads Coaching</a></p>
+    </section>
+  </div>
+  <div class="container site-footer__legal">
+    <p>© {currentYear} Threads Coaching.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-top: var(--section-space);
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-7);
+    padding-bottom: var(--space-7);
+  }
+
+  .site-footer h2,
+  .site-footer p {
+    color: inherit;
+  }
+
+  .site-footer h2 {
+    margin-bottom: var(--space-3);
+    font-size: 1.15rem;
+    letter-spacing: 0;
+  }
+
+  .site-footer__brand {
+    font-family: Georgia, serif;
+    font-size: 1.5rem !important;
+    font-style: italic;
+  }
+
+  .site-footer ul {
+    display: grid;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer a {
+    color: var(--color-white);
+  }
+
+  .site-footer address {
+    display: grid;
+    gap: var(--space-2);
+    font-style: normal;
+  }
+
+  .site-footer__legal {
+    padding-block: var(--space-4);
+    border-top: 1px solid rgb(255 255 255 / 0.24);
+    color: rgb(255 255 255 / 0.82);
+    font-size: var(--text-sm);
+  }
+
+  @media (min-width: 48rem) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+</style>

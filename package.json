@@ -1,0 +1,24 @@
+{
+  "name": "threadscoaching.co.uk",
+  "version": "0.1.0",
+  "description": "The Threads Coaching website.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "preview:cf": "npm run build && wrangler pages dev dist",
+    "check": "astro check",
+    "check:build": "node scripts/check-build.mjs",
+    "check:redirects": "node scripts/check-redirect-map.mjs"
+  },
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "astro": "^7.2.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.123.0"
+  }
+}

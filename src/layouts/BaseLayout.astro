@@ -1,0 +1,34 @@
+---
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SeoHead from '../components/SeoHead.astro';
+import type { SchemaNode } from '../config/site';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  robots?: 'index,follow' | 'noindex,follow';
+  schema?: SchemaNode | SchemaNode[];
+}
+
+const { title, description, path, image, type, robots, schema } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <SeoHead {title} {description} {path} {image} {type} {robots} {schema} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <SiteHeader />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

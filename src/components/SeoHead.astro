@@ -1,0 +1,67 @@
+---
+import { absoluteUrl, isProduction, site, type SchemaNode } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  robots?: 'index,follow' | 'noindex,follow';
+  schema?: SchemaNode | SchemaNode[];
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  image = site.defaultSocialImage,
+  type = 'website',
+  robots,
+  schema,
+} = Astro.props;
+
+const indexable = isProduction && robots !== 'noindex,follow';
+const canonical = absoluteUrl(path);
+// Preview deployments must never point crawlers or social scrapers at the
+// production host. Social metadata is therefore a production-only concern.
+const socialImage = isProduction ? absoluteUrl(image) : undefined;
+const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const schemaJson = JSON.stringify({ '@context': 'https://schema.org', '@graph': schemas }).replace(
+  /</g,
+  '\\u003c',
+);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#17383c" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={indexable ? 'index,follow' : 'noindex,nofollow,noarchive'} />
+
+{isProduction && robots !== 'noindex,follow' && <link rel="canonical" href={canonical} />}
+
+{isProduction && (
+  <>
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    {robots !== 'noindex,follow' && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+  </>
+)}
+
+{isProduction && schemas.length > 0 && (
+  <script is:inline type="application/ld+json" set:html={schemaJson}></script>
+)}

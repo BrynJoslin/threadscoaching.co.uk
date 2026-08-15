@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "include": [
+    "/feed",
+    "/feed/",
+    "/events-page",
+    "/events-page/",
+    "/pages-sitemap.xml",
+    "/member-profile_p_first-chunk-sitemap.xml"
+  ],
+  "exclude": []
+}

@@ -1,0 +1,58 @@
+---
+import { absoluteUrl, isProduction, type SchemaNode } from '../config/site';
+
+export type BreadcrumbItem = {
+  label: string;
+  href?: string;
+};
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+const schema: SchemaNode = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: absoluteUrl(item.href) } : {}),
+  })),
+};
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {items.map((item, index) => (
+      <li>
+        {item.href && index !== items.length - 1 ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+{isProduction && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}></script>}
+
+<style>
+  .breadcrumbs {
+    margin-block: var(--space-5);
+    font-size: var(--text-sm);
+  }
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li:not(:last-child)::after {
+    content: '/';
+    margin-inline-start: var(--space-2);
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+interface Props {
+  mode?: 'placeholder' | 'live';
+}
+
+const { mode = 'placeholder' } = Astro.props;
+---
+
+<form class="enquiry-form" action={mode === 'live' ? '/api/enquiry' : '#enquiry-form-notice'} method="post" novalidate data-enquiry-form>
+  <div id="enquiry-form-notice" class="form-notice" role="status">
+    {mode === 'placeholder'
+      ? 'The online form is not sending messages just yet. You can use it to prepare your enquiry, then email or call Threads Coaching directly.'
+      : 'Tell us a little about what you need and we will be in touch.'}
+  </div>
+
+  <div class="form-error-summary" tabindex="-1" hidden data-error-summary>
+    <p><strong>Please correct the highlighted fields.</strong></p>
+    <ul data-error-list></ul>
+  </div>
+
+  <div class="form-grid">
+    <p>
+      <label for="name">Name <span aria-hidden="true">*</span></label>
+      <input id="name" name="name" type="text" autocomplete="name" maxlength="100" required aria-describedby="name-error" />
+      <span id="name-error" class="field-error" hidden></span>
+    </p>
+    <p>
+      <label for="email">Email address <span aria-hidden="true">*</span></label>
+      <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required aria-describedby="email-error" />
+      <span id="email-error" class="field-error" hidden></span>
+    </p>
+    <p>
+      <label for="telephone">Telephone number <span class="optional">(optional)</span></label>
+      <input id="telephone" name="telephone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" />
+    </p>
+    <p>
+      <label for="enquiry-type">What would you like help with? <span aria-hidden="true">*</span></label>
+      <select id="enquiry-type" name="enquiryType" required aria-describedby="enquiry-type-error">
+        <option value="">Please choose one</option>
+        <option>One-to-one coaching</option>
+        <option>Personality coaching</option>
+        <option>Teams and workshops</option>
+        <option>Body Soul Spirit Reset</option>
+        <option>Speaking</option>
+        <option>Not sure</option>
+        <option>Other</option>
+      </select>
+      <span id="enquiry-type-error" class="field-error" hidden></span>
+    </p>
+  </div>
+
+  <p class="honeypot" aria-hidden="true">
+    <label for="website">Website</label>
+    <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+  </p>
+
+  <p>
+    <label for="message">How can we help? <span aria-hidden="true">*</span></label>
+    <textarea id="message" name="message" rows="7" minlength="20" maxlength="3000" required aria-describedby="message-help message-error"></textarea>
+    <span id="message-help" class="field-help">Please share enough context for us to understand what you are looking for.</span>
+    <span id="message-error" class="field-error" hidden></span>
+  </p>
+
+  <p class="privacy-note">By getting in touch, you understand that Threads Coaching will use these details to respond to your enquiry. Read the <a href="/privacy">privacy notice</a>.</p>
+
+  <button type="submit">{mode === 'placeholder' ? 'Review your enquiry' : 'Send enquiry'}</button>
+  <p class="form-status" role="status" hidden data-form-status></p>
+</form>
+
+<script is:inline src="/scripts/enquiry-form.js" defer></script>

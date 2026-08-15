@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CallToAction from '../components/CallToAction.astro';
+import { services } from '../data/services';
+import heroImage from '../assets/people/joy-and-paul.jpg';
+import { organizationSchema, websiteSchema, joySchema, paulSchema } from '../data/schema';
+---
+
+<BaseLayout title="Life, Leadership & Christian Coaching | Threads Coaching" description="Warm, practical coaching for individuals and teams seeking greater clarity, confidence and purposeful change." path="/" schema={[websiteSchema, organizationSchema, joySchema, paulSchema]}>
+    <section class="hero hero--home">
+      <div class="container hero__content">
+        <p class="eyebrow">Life, leadership and Christian coaching</p>
+        <h1>Find clarity. Grow with courage. Bring change to your world.</h1>
+        <p class="lead">For individuals and teams who want a clearer way forward, with support that makes room for faith, values and real life.</p>
+        <div class="cluster"><a class="button" href="/contact">Start a conversation</a><a class="text-link" href="/one-to-one-sessions">Explore coaching options</a></div>
+      </div>
+      <div class="hero__image"><Image src={heroImage} alt="Joy and Paul from Threads Coaching" width={640} densities={[1, 1.5, 2]} sizes="(min-width: 64rem) 50vw, 100vw" quality={55} loading="eager" fetchpriority="high" /></div>
+    </section>
+
+    <section class="section"><div class="container narrow"><p class="eyebrow">You may be here because</p><h2>You are carrying something important, but the next step is not yet clear.</h2><div class="three-up"><p>Leadership responsibility feels heavier than it needs to.</p><p>You want your values, faith and everyday choices to point in the same direction.</p><p>You are ready to change a pattern, but not sure how to begin.</p></div></div></section>
+
+    <section class="section section--tint"><div class="container narrow"><p class="eyebrow">A steadier way forward</p><h2>Good questions can help you see what matters, name what is getting in the way, and take an honest next step.</h2><p>Threads Coaching offers thoughtful, practical support rather than a one-size-fits-all formula.</p></div></section>
+
+    <section class="section"><div class="container"><p class="eyebrow">Choose a pathway</p><h2>Support shaped around the change you want to make.</h2><div class="card-grid">
+      {services.map((service) => <ServiceCard {service} />)}
+    </div></div></section>
+
+    <section class="section section--dark"><div class="container"><p class="eyebrow">A simple plan</p><h2>You do not need to have the whole route mapped out.</h2><ol class="steps"><li><strong>Tell us where you are.</strong><span>Share the question, change or challenge you are facing.</span></li><li><strong>Choose the support that fits.</strong><span>We will help you identify a useful next conversation.</span></li><li><strong>Move forward with greater clarity.</strong><span>Take practical, values-aligned steps at a sustainable pace.</span></li></ol></div></section>
+
+    <section class="section"><div class="container split"><div><p class="eyebrow">Your guides</p><h2>Coaching that is warm, honest and grounded in experience.</h2><p>Joy brings life and leadership coaching experience. Paul brings a pastoral, teaching and faith-aware perspective. Together, they make space for thoughtful conversation and practical change.</p><a class="text-link" href="/about">Meet Joy and Paul</a></div><div class="panel"><h3>For teams, too</h3><p>If your team needs better reflective space, stronger connections or values that shape everyday work, explore workshops and team coaching.</p><a class="button button--secondary" href="/team-workshops">Explore team workshops</a></div></div></section>
+
+    <section class="section"><div class="container narrow"><p class="eyebrow">Questions</p><h2>Before you get in touch</h2><details><summary>Do I need to be a Christian?</summary><p>No. Threads Coaching is clear about its Christian perspective while making space for people to decide whether that approach is right for them.</p></details><details><summary>Is coaching the same as counselling?</summary><p>No. Coaching focuses on reflection, goals and practical next steps. It is not a replacement for clinical, medical or therapeutic support.</p></details><details><summary>What if I am not sure which service fits?</summary><p>Start a conversation. You do not need to arrive with a perfect brief.</p></details></div></section>
+    <CallToAction title="You do not have to work it all out alone." body="Start with a conversation about where you are and what might help." primaryHref="/contact" primaryLabel="Start a conversation" />
+</BaseLayout>

@@ -1,0 +1,67 @@
+---
+import ButtonLink from './ButtonLink.astro';
+
+interface Props {
+  title: string;
+  body?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const {
+  title,
+  body,
+  primaryHref = '/contact',
+  primaryLabel = 'Start a conversation',
+  secondaryHref,
+  secondaryLabel,
+} = Astro.props;
+---
+
+<section class="cta" aria-labelledby="cta-title">
+  <div class="container cta__inner">
+    <div>
+      <h2 id="cta-title">{title}</h2>
+      {body && <p>{body}</p>}
+    </div>
+    <div class="cta__actions">
+      <ButtonLink href={primaryHref}>{primaryLabel}</ButtonLink>
+      {secondaryHref && secondaryLabel && (
+        <ButtonLink href={secondaryHref} variant="secondary">{secondaryLabel}</ButtonLink>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: var(--section-space);
+    background: var(--color-teal-soft);
+  }
+
+  .cta__inner {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  p {
+    margin-top: var(--space-3);
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 48rem) {
+    .cta__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+</style>

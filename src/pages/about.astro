@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CallToAction from '../components/CallToAction.astro';
+import joyImage from '../assets/people/joy-professional-wide.jpg';
+import paulImage from '../assets/people/paul-portrait.jpg';
+import { organizationSchema, websiteSchema, joySchema, pageSchema, paulSchema } from '../data/schema';
+---
+<BaseLayout title="About Joy & Paul | Threads Coaching" description="Meet Joy and Paul: warm, experienced guides for life, leadership and faith-aware coaching." path="/about" schema={[organizationSchema, websiteSchema, joySchema, paulSchema, pageSchema('AboutPage', '/about', 'About Joy and Paul')] }>
+  <div class="container"><Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'About' }]} /></div>
+    <section class="section hero-copy"><div class="container narrow"><p class="eyebrow">About Threads Coaching</p><h1>Coaching grounded in experience, faith and honest conversation.</h1><p class="lead">Choosing a coach is personal. Joy and Paul bring different experience, a shared belief in people’s potential, and room for real questions.</p></div></section>
+    <section class="section"><div class="container split split--media"><div><Image src={joyImage} alt="Joy from Threads Coaching" width={640} densities={[1, 1.5]} sizes="(min-width: 64rem) 45vw, 100vw" quality={60} /></div><div><p class="eyebrow">Joy</p><h2>Helping people lead and live with greater clarity.</h2><p>Joy is a qualified Life and Leadership Coach whose work is shaped by experience across UK church, public and third-sector settings. She helps people explore purpose, values, confidence and the obstacles that can make change feel difficult.</p><p>Her approach is holistic and practical: making room for reflection, then helping people turn what they learn into meaningful action.</p></div></div></section>
+    <section class="section section--tint"><div class="container split split--media"><div><Image src={paulImage} alt="Paul from Threads Coaching" width={640} densities={[1, 1.5]} sizes="(min-width: 64rem) 45vw, 100vw" quality={60} /></div><div><p class="eyebrow">Paul</p><h2>Making space for faith, identity and whole-person growth.</h2><p>Paul brings pastoral, teaching and faith-aware experience to conversations about identity, discipleship and everyday life. His perspective is informed by his own journey towards greater wholeness across body, mind and spirit.</p><p>He uses thoughtful questions, reflection and prayer where appropriate to help people identify a healthier, more hopeful way forward.</p></div></div></section>
+    <section class="section"><div class="container narrow"><p class="eyebrow">How we work</p><h2>The person seeking support remains at the centre.</h2><p>Threads Coaching is not about imposing a formula. It is about helping you name what matters, understand the patterns around you, and choose a next step that fits your values and situation.</p><ul><li>Warm, attentive listening.</li><li>Questions that create clarity rather than pressure.</li><li>Practical, sustainable action.</li><li>Faith-aware support where it is welcome and useful.</li></ul></div></section>
+    <CallToAction title="Want to find the right starting point?" body="Explore the coaching options or tell us a little about what you are facing." primaryHref="/contact" primaryLabel="Start a conversation" />
+</BaseLayout>
