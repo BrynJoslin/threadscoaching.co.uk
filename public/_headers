@@ -8,6 +8,11 @@
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
+# The permanent pages.dev review hostname remains noindex even when the
+# custom production domain is added later.
+https://threads-coaching.pages.dev/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
 # Cloudflare Pages supports one named hostname placeholder plus the path
 # wildcard. This covers branch preview hosts without matching production.
 https://:preview.threads-coaching.pages.dev/*
