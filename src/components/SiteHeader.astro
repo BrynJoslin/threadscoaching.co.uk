@@ -15,46 +15,47 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     <nav class="site-header__desktop-nav" aria-label="Primary navigation">
       <ul>
-        {
-          primaryNavigation.map((item) => (
-            <li>
-              <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
+        {primaryNavigation.map((item) => (
+          <li><a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>{item.label}</a></li>
+        ))}
       </ul>
     </nav>
 
     <a class="button button--primary site-header__cta" href="/contact">Start a conversation</a>
 
-    <details class="site-header__mobile-menu">
-      <summary><span class="visually-hidden">Open </span>Menu</summary>
-      <nav aria-label="Mobile primary navigation">
+    <button class="mobile-menu-button" type="button" aria-label="Open menu" aria-haspopup="dialog" data-mobile-menu-open>
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <dialog class="mobile-menu" aria-labelledby="mobile-menu-title" data-mobile-menu>
+    <div class="mobile-menu__panel">
+      <button class="mobile-menu__close" type="button" aria-label="Close menu" data-mobile-menu-close><span aria-hidden="true">×</span></button>
+      <a class="mobile-menu__brand" href="/" aria-label="Threads Coaching home">
+        <Image src={logo} alt="" width={64} height={65} quality={75} loading="lazy" />
+        <strong>Threads Coaching</strong>
+      </a>
+      <nav aria-labelledby="mobile-menu-title">
+        <h2 id="mobile-menu-title" class="visually-hidden">Main menu</h2>
         <ul>
-          {
-            primaryNavigation.map((item) => (
-              <li>
-                <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
-                  {item.label}
-                </a>
-              </li>
-            ))
-          }
-          <li><a href="/contact">Start a conversation</a></li>
+          {primaryNavigation.map((item) => (
+            <li><a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>{item.label}</a></li>
+          ))}
+          <li><a class="button button--primary" href="/contact">Start a conversation</a></li>
         </ul>
       </nav>
-    </details>
-  </div>
+    </div>
+  </dialog>
 </header>
+
+<script is:inline src="/scripts/mobile-menu.js" defer></script>
 
 <style>
   .site-header {
     position: sticky;
+    z-index: 20;
     top: 0;
-    z-index: 10;
-    background: rgb(255 253 248 / 0.9);
+    background: rgb(255 253 248 / 0.92);
     border-bottom: 1px solid rgb(220 232 232 / 0.86);
     backdrop-filter: blur(16px);
   }
@@ -63,8 +64,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     display: flex;
     min-height: 5rem;
     align-items: center;
-    gap: var(--space-4);
     justify-content: space-between;
+    gap: var(--space-4);
   }
 
   .site-header__brand {
@@ -75,110 +76,108 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     text-decoration: none;
   }
 
-  .site-header__brand :global(img) {
-    width: 2.75rem;
-    height: 2.75rem;
-  }
+  .site-header__brand :global(img) { width: 2.75rem; height: 2.75rem; }
 
-  .site-header__brand-text {
-    display: grid;
-    line-height: 1.05;
-  }
+  .site-header__brand-text { display: grid; line-height: 1.05; }
+  .site-header__brand-text strong { font-size: 1rem; letter-spacing: -0.02em; }
+  .site-header__brand-text small { margin-top: 0.2rem; color: var(--color-muted); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
 
-  .site-header__brand-text strong {
-    font-size: 1rem;
-    letter-spacing: -0.02em;
-  }
+  .site-header__desktop-nav,
+  .site-header__cta { display: none; }
 
-  .site-header__brand-text small {
-    margin-top: 0.2rem;
-    color: var(--color-muted);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-  }
-
-  .site-header__desktop-nav {
-    display: none;
-  }
-
-  .site-header__desktop-nav ul,
-  .site-header__mobile-menu ul {
+  .site-header__desktop-nav ul {
     display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 1.5rem);
     padding: 0;
     margin: 0;
     list-style: none;
   }
 
-  .site-header__desktop-nav ul {
-    align-items: center;
-    gap: var(--space-5);
+  .site-header__desktop-nav a { color: var(--color-ink); font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .site-header__desktop-nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--color-coral-dark); text-decoration-thickness: 0.15em; text-underline-offset: 0.35em; }
+
+  .mobile-menu-button,
+  .mobile-menu__close {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    color: var(--color-ink);
   }
 
-  .site-header__desktop-nav a {
+  .mobile-menu-button { align-content: center; gap: 0.3rem; }
+  .mobile-menu-button span { width: 1.5rem; height: 2px; background: currentColor; border-radius: 2px; }
+  .mobile-menu-button:hover,
+  .mobile-menu__close:hover { background: var(--color-teal-soft); }
+
+  .mobile-menu {
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    padding: 0;
+    margin: 0;
+    background: var(--color-cream);
+    border: 0;
     color: var(--color-ink);
-    font-weight: 650;
-    text-decoration: none;
   }
+
+  .mobile-menu::backdrop { background: rgb(23 56 60 / 0.48); }
+
+  .mobile-menu__panel {
+    position: relative;
+    display: grid;
+    min-height: 100%;
+    place-content: center;
+    justify-items: center;
+    gap: clamp(2rem, 6vh, 4rem);
+    overflow-y: auto;
+    padding: 5rem var(--gutter) 3rem;
+    text-align: center;
+    background:
+      radial-gradient(circle at 15% 10%, rgb(229 223 189 / 0.72), transparent 18rem),
+      linear-gradient(145deg, #fffdf8, var(--color-teal-soft));
+  }
+
+  .mobile-menu__panel::after {
+    position: absolute;
+    right: -8rem;
+    bottom: 2rem;
+    width: 26rem;
+    height: 8rem;
+    border: 2px solid rgb(47 127 141 / 0.2);
+    border-radius: 50%;
+    content: '';
+    pointer-events: none;
+    transform: rotate(-12deg);
+  }
+
+  .mobile-menu__close { position: absolute; z-index: 2; top: 1rem; right: max(1rem, var(--gutter)); font-size: 2.5rem; font-weight: 300; line-height: 1; }
+  .mobile-menu__close span { transform: translateY(-0.08em); }
+
+  .mobile-menu__brand { position: relative; z-index: 1; display: grid; justify-items: center; gap: 0.7rem; color: var(--color-ink); font-size: 1.15rem; text-decoration: none; }
+  .mobile-menu__brand :global(img) { width: 4rem; height: 4rem; }
+
+  .mobile-menu nav { position: relative; z-index: 1; }
+  .mobile-menu ul { display: grid; justify-items: center; gap: 0.35rem; padding: 0; margin: 0; list-style: none; }
+  .mobile-menu li { max-width: none; }
+  .mobile-menu nav a:not(.button) { display: block; min-height: 3rem; padding: 0.45rem 1rem; color: var(--color-ink); font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 780; line-height: 1.1; text-decoration: none; }
+  .mobile-menu nav a[aria-current='page']:not(.button) { color: var(--color-teal-dark); text-decoration: underline; text-decoration-color: var(--color-coral); text-underline-offset: 0.22em; }
+  .mobile-menu .button { margin-top: var(--space-4); }
 
   @media (max-width: 27rem) {
     .site-header__brand-text small { display: none; }
   }
 
-  .site-header__desktop-nav a[aria-current='page'] {
-    text-decoration: underline;
-    text-decoration-color: var(--color-coral-dark);
-    text-decoration-thickness: 0.15em;
-    text-underline-offset: 0.35em;
-  }
-
-  .site-header__mobile-menu {
-    position: relative;
-  }
-
-  .site-header__mobile-menu summary {
-    min-height: 3rem;
-    padding: 0.65rem 0.8rem;
-    color: var(--color-ink);
-    font-weight: 750;
-  }
-
-  .site-header__mobile-menu nav {
-    position: absolute;
-    top: calc(100% + 0.55rem);
-    right: 0;
-    width: min(20rem, calc(100vw - (var(--gutter) * 2)));
-    padding: var(--space-3);
-    background: var(--color-white);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .site-header__mobile-menu ul {
-    flex-direction: column;
-  }
-
-  .site-header__mobile-menu a {
-    display: block;
-    padding: 0.7rem;
-    color: var(--color-ink);
-    font-weight: 650;
-  }
-
-  .site-header__cta {
-    display: none;
-  }
-
-  @media (min-width: 48rem) {
+  @media (min-width: 68rem) {
     .site-header__desktop-nav,
-    .site-header__cta {
-      display: block;
-    }
-
-    .site-header__mobile-menu {
-      display: none;
-    }
+    .site-header__cta { display: block; }
+    .mobile-menu-button,
+    .mobile-menu { display: none; }
   }
 </style>

@@ -37,8 +37,17 @@ const schema: SchemaNode = {
 
 <style>
   .breadcrumbs {
-    margin-block: var(--space-5);
+    margin: 0 0 var(--space-5);
     font-size: var(--text-sm);
+  }
+
+  .breadcrumbs a {
+    color: var(--color-teal-dark);
+    font-weight: 700;
+  }
+
+  .breadcrumbs span[aria-current='page'] {
+    color: var(--color-muted);
   }
 
   ol {
