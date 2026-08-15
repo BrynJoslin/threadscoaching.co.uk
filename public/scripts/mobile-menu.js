@@ -7,7 +7,10 @@ if (menu instanceof HTMLDialogElement && openButton instanceof HTMLButtonElement
     if (menu.open) menu.close();
   };
 
-  openButton.addEventListener('click', () => menu.showModal());
+  openButton.addEventListener('click', () => {
+    menu.showModal();
+    openButton.setAttribute('aria-expanded', 'true');
+  });
   closeButton?.addEventListener('click', closeMenu);
 
   menu.addEventListener('click', (event) => {
@@ -15,7 +18,14 @@ if (menu instanceof HTMLDialogElement && openButton instanceof HTMLButtonElement
   });
 
   menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-  menu.addEventListener('close', () => openButton.focus());
+  menu.addEventListener('close', () => {
+    openButton.setAttribute('aria-expanded', 'false');
+    openButton.focus();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.open) closeMenu();
+  });
 
   const desktopQuery = window.matchMedia('(min-width: 68rem)');
   desktopQuery.addEventListener('change', (event) => {

@@ -23,12 +23,12 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     <a class="button button--primary site-header__cta" href="/contact">Start a conversation</a>
 
-    <button class="mobile-menu-button" type="button" aria-label="Open menu" aria-haspopup="dialog" data-mobile-menu-open>
+    <button class="mobile-menu-button" type="button" aria-label="Open menu" aria-haspopup="dialog" aria-controls="mobile-navigation" aria-expanded="false" data-mobile-menu-open>
       <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
     </button>
   </div>
 
-  <dialog class="mobile-menu" aria-labelledby="mobile-menu-title" data-mobile-menu>
+  <dialog id="mobile-navigation" class="mobile-menu" aria-labelledby="mobile-menu-title" data-mobile-menu>
     <div class="mobile-menu__panel">
       <button class="mobile-menu__close" type="button" aria-label="Close menu" data-mobile-menu-close><span aria-hidden="true">×</span></button>
       <a class="mobile-menu__brand" href="/" aria-label="Threads Coaching home">
