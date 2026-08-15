@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { primaryNavigation } from '../data/navigation';
+import logo from '../assets/brand/threads-coaching-logo.png';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
@@ -7,8 +9,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="site-header__brand" href="/" aria-label="Threads Coaching home">
-      <span aria-hidden="true">Threads</span>
-      <span>Coaching</span>
+      <Image src={logo} alt="" width={48} height={49} quality={75} loading="eager" />
+      <span class="site-header__brand-text"><strong>Threads Coaching</strong><small>Joy &amp; Paul Blundell</small></span>
     </a>
 
     <nav class="site-header__desktop-nav" aria-label="Primary navigation">
@@ -49,10 +51,12 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 <style>
   .site-header {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 10;
-    background: var(--color-cream);
-    border-bottom: 1px solid var(--color-line);
+    background: rgb(255 253 248 / 0.9);
+    border-bottom: 1px solid rgb(220 232 232 / 0.86);
+    backdrop-filter: blur(16px);
   }
 
   .site-header__inner {
@@ -64,19 +68,35 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   }
 
   .site-header__brand {
-    display: grid;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
     color: var(--color-ink);
-    font-family: Georgia, serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    line-height: 0.9;
     text-decoration: none;
   }
 
-  .site-header__brand span:first-child {
-    color: var(--color-teal-dark);
-    font-size: 1.35rem;
-    font-style: italic;
+  .site-header__brand :global(img) {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .site-header__brand-text {
+    display: grid;
+    line-height: 1.05;
+  }
+
+  .site-header__brand-text strong {
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .site-header__brand-text small {
+    margin-top: 0.2rem;
+    color: var(--color-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
   }
 
   .site-header__desktop-nav {
@@ -100,6 +120,10 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     color: var(--color-ink);
     font-weight: 650;
     text-decoration: none;
+  }
+
+  @media (max-width: 27rem) {
+    .site-header__brand-text small { display: none; }
   }
 
   .site-header__desktop-nav a[aria-current='page'] {

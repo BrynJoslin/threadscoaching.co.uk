@@ -24,11 +24,13 @@ SITE_ENV=production npm run build
 Cloudflare Pages must use `SITE_ENV=preview` for preview deployments and
 `SITE_ENV=production` only for the production deployment.
 
-## Content approval gate
+## Mock homepage as content authority
 
-Testimonials are intentionally not published yet. Add only owner-approved
-quotes and attribution preferences; do not use anonymous or reconstructed
-testimonials as production proof.
+The supplied `threads-coaching.html` mock was confirmed on 15 August 2026 as
+the source of truth for the site's visual direction, voice, credentials and
+three anonymous-attribution coaching testimonials. Those exact testimonials
+are published in the no-index review build. Privacy details and the eventual
+working enquiry form still require final production approval.
 
 ## Checks
 

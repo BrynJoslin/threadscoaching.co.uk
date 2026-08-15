@@ -38,25 +38,61 @@ const {
 <style>
   .cta {
     padding-block: var(--section-space);
-    background: var(--color-teal-soft);
+    background: var(--color-white);
   }
 
   .cta__inner {
+    position: relative;
+    overflow: hidden;
     display: grid;
     gap: var(--space-5);
     align-items: center;
+    padding: clamp(2rem, 6vw, 4.5rem);
+    background: var(--color-ink);
+    border-radius: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.5rem) 0.65rem clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--color-white);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .cta__inner::after {
+    position: absolute;
+    right: -3rem;
+    bottom: -6.5rem;
+    color: rgb(255 255 255 / 0.045);
+    content: '~ ~ ~';
+    font-family: Georgia, serif;
+    font-size: clamp(7rem, 16vw, 12rem);
+    letter-spacing: -0.28em;
+    white-space: nowrap;
+    transform: rotate(-8deg);
+  }
+
+  h2 {
+    color: inherit;
   }
 
   p {
     margin-top: var(--space-3);
-    color: var(--color-muted);
+    color: #c9d9da;
     font-size: var(--text-lead);
   }
 
   .cta__actions {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
+  }
+
+  .cta__actions :global(.button--secondary) {
+    border-color: rgb(255 255 255 / 0.72);
+    color: var(--color-white);
+  }
+
+  .cta__actions :global(.button--secondary:hover) {
+    background: var(--color-white);
+    color: var(--color-ink);
   }
 
   @media (min-width: 48rem) {

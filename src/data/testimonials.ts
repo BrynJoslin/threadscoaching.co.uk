@@ -7,17 +7,17 @@ export type Testimonial = {
 export const testimonials = [
   {
     quote:
-      'Joy helped me see the threads running through my story and gave me confidence to take the next step.',
+      'Joy enabled me to learn more about myself and how I approach life, to consider my values, goals and intentions and to move forward with more clarity and understanding.',
     attribution: 'Coaching client',
   },
   {
     quote:
-      'I left with practical clarity, a renewed sense of purpose and a much kinder way of looking at myself.',
+      'Coaching was incredibly helpful in supporting me through some big business decisions and also facilitated the development of some big picture ideas and values to shape my work going forward.',
     attribution: 'Coaching client',
   },
   {
     quote:
-      'Sometimes it felt as if Joy knew me better than I knew myself. The process gave me language for things I had struggled to explain.',
-    attribution: 'Personality coaching client',
+      'I began Life Coaching with Joy at the start of a career transition. Coaching helped me find the clarity and courage to step into my dreams.',
+    attribution: 'Coaching client',
   },
 ] as const satisfies readonly Testimonial[];
