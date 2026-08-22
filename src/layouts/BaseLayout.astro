@@ -3,25 +3,34 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SeoHead from '../components/SeoHead.astro';
 import type { SchemaNode } from '../config/site';
+import { getPage, type PagePath } from '../data/pages';
 import '../styles/global.css';
 
 interface Props {
-  title: string;
-  description: string;
-  path?: string;
+  path?: PagePath;
+  title?: string;
+  description?: string;
   image?: string;
   type?: 'website' | 'article';
-  robots?: 'index,follow' | 'noindex,follow';
+  noindex?: boolean;
   schema?: SchemaNode | SchemaNode[];
 }
 
-const { title, description, path, image, type, robots, schema } = Astro.props;
+const { path, image, type, noindex = false, schema } = Astro.props;
+const registeredPage = path ? getPage(path) : undefined;
+const title = registeredPage?.title ?? Astro.props.title;
+const description = registeredPage?.description ?? Astro.props.description;
+const effectiveNoindex = noindex || registeredPage?.indexable === false;
+
+if (!title || !description) {
+  throw new Error('BaseLayout requires a registered page path or explicit title and description.');
+}
 ---
 
 <!doctype html>
 <html lang="en-GB">
   <head>
-    <SeoHead {title} {description} {path} {image} {type} {robots} {schema} />
+    <SeoHead {title} {description} {path} {image} {type} noindex={effectiveNoindex} {schema} />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>

@@ -29,6 +29,8 @@ jobs:
 
       - run: npm ci
       - run: npm run check
+      - run: npm run check:source
       - run: npm run build
       - run: npm run check:build
-      - run: npm run check:redirects
+      - run: npm run check:budget
+      - run: npm run check:migrations

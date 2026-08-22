@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { gonePaths, redirects } from '../src/data/redirects.ts';
+import { gonePathVariants, gonePaths, redirects } from '../src/data/redirects.ts';
 import { pages } from '../src/data/pages.ts';
 
 const failures = [];
@@ -57,14 +57,7 @@ for (const path of expectedSlashPaths) {
   if (!rule || rule.to !== path || rule.status !== '301') fail(`Missing trailing-slash redirect: ${path}/ -> ${path}`);
 }
 
-const functionGonePaths = new Set([
-  '/feed',
-  '/feed/',
-  '/events-page',
-  '/events-page/',
-  '/pages-sitemap.xml',
-  '/member-profile_p_first-chunk-sitemap.xml',
-]);
+const functionGonePaths = new Set(gonePathVariants);
 for (const path of functionGonePaths) {
   if (bySource.has(path)) fail(`Gone URL must not have a redirect rule: ${path}`);
   if (!routes.include?.includes(path)) fail(`Gone URL is not routed to the 410 Function: ${path}`);
@@ -75,6 +68,20 @@ for (const path of routes.include ?? []) {
 
 for (const path of gonePaths) {
   if (!functionGonePaths.has(path)) fail(`Migration registry contains an unhandled gone URL: ${path}`);
+}
+
+const expectedFunctionFiles = [
+  'functions/feed.ts',
+  'functions/events-page.ts',
+  'functions/pages-sitemap.xml.ts',
+  'functions/member-profile_p_first-chunk-sitemap.xml.ts',
+];
+for (const filename of expectedFunctionFiles) {
+  try {
+    await readFile(resolve(filename), 'utf8');
+  } catch {
+    fail(`Missing exact 410 Function: ${filename}`);
+  }
 }
 
 if (failures.length) {

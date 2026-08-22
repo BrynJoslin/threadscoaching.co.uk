@@ -3,13 +3,16 @@ const openButton = document.querySelector('[data-mobile-menu-open]');
 const closeButton = document.querySelector('[data-mobile-menu-close]');
 
 if (menu instanceof HTMLDialogElement && openButton instanceof HTMLButtonElement) {
+  let trigger = null;
   const closeMenu = () => {
     if (menu.open) menu.close();
   };
 
   openButton.addEventListener('click', () => {
+    trigger = document.activeElement instanceof HTMLElement ? document.activeElement : openButton;
     menu.showModal();
     openButton.setAttribute('aria-expanded', 'true');
+    closeButton?.focus();
   });
   closeButton?.addEventListener('click', closeMenu);
 
@@ -20,7 +23,8 @@ if (menu instanceof HTMLDialogElement && openButton instanceof HTMLButtonElement
   menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
   menu.addEventListener('close', () => {
     openButton.setAttribute('aria-expanded', 'false');
-    openButton.focus();
+    trigger?.focus();
+    trigger = null;
   });
 
   document.addEventListener('keydown', (event) => {

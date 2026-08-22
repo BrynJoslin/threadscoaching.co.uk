@@ -78,7 +78,8 @@ export const pages = [
 ] as const satisfies readonly PageDefinition[];
 
 export const indexablePages = pages.filter((page) => page.indexable);
+export type PagePath = (typeof pages)[number]['path'];
 
-export function getPage(path: string) {
+export function getPage(path: PagePath) {
   return pages.find((page) => page.path === path);
 }

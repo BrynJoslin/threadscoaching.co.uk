@@ -20,3 +20,7 @@ export const gonePaths = [
   '/pages-sitemap.xml',
   '/member-profile_p_first-chunk-sitemap.xml',
 ] as const;
+
+export const gonePathVariants = gonePaths.flatMap((path) =>
+  path.endsWith('.xml') ? [path] : [path, `${path}/`],
+);

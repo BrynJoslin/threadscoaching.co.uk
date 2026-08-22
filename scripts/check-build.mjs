@@ -9,9 +9,13 @@ const productionOrigin = 'https://www.threadscoaching.co.uk';
 
 const dist = resolve('dist');
 const isProduction = (process.env.SITE_ENV ?? 'preview') === 'production';
+if (!['preview', 'production'].includes(process.env.SITE_ENV ?? 'preview')) {
+  throw new Error(`SITE_ENV must be preview or production. Received: ${process.env.SITE_ENV}`);
+}
 const failures = [];
 
 const fail = (message) => failures.push(message);
+const escapeHtml = (value) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const fileForPath = (path) =>
   resolve(dist, path === '/' ? 'index.html' : `${path.slice(1)}.html`);
 
@@ -53,9 +57,11 @@ for (const page of indexablePages) {
   const html = htmlByPath.get(page.path) ?? '';
   if (!html) continue;
   if (!/<title>[^<]+<\/title>/i.test(html)) fail(`${page.path} has no title`);
+  if (!html.includes(`<title>${escapeHtml(page.title)}</title>`)) fail(`${page.path} title does not match the page registry`);
   if (!/<meta\s+name=["']description["'][^>]*content=["'][^"']+|<meta\s+content=["'][^"']+["'][^>]*name=["']description["']/i.test(html)) {
     fail(`${page.path} has no meta description`);
   }
+  if (!html.includes(`name="description" content="${escapeHtml(page.description)}"`)) fail(`${page.path} description does not match the page registry`);
   if (countH1(html) !== 1) fail(`${page.path} must have exactly one H1`);
 
   if (isProduction) {

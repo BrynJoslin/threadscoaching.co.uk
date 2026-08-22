@@ -1,17 +1,18 @@
 ---
-interface Props {
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
   href: string;
   variant?: 'primary' | 'secondary' | 'text';
-  className?: string;
-  target?: '_blank';
-  rel?: string;
 }
 
-const { href, variant = 'primary', className = '', target, rel } = Astro.props;
+const { href, variant = 'primary', class: className = '', ...attributes } = Astro.props;
 const classes = `button button--${variant} ${className}`.trim();
-const safeRel = target === '_blank' ? rel ?? 'noopener noreferrer' : rel;
+const safeRel = attributes.target === '_blank'
+  ? [...new Set(`${attributes.rel ?? ''} noopener noreferrer`.trim().split(/\s+/))].join(' ')
+  : attributes.rel;
 ---
 
-<a class={classes} href={href} target={target} rel={safeRel}>
+<a class={classes} href={href} {...attributes} rel={safeRel}>
   <slot />
 </a>

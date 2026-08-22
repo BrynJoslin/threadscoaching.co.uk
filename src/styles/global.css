@@ -49,7 +49,6 @@ input[type="radio"] {
 
 a {
   color: var(--color-teal-dark);
-  overflow-wrap: anywhere;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.16em;
 }
